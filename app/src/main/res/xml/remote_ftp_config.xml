@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>server_path</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>user_name</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>user_password</key>
+        <value></value>
+    </entry>
+</defaultsMap>
