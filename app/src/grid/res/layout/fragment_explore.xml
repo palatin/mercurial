@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:background="?attr/explore_bg_color"
         tools:context=".ui.explorer.ExploreFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -64,17 +64,20 @@
 
             <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="4dp" >
+                    android:layout_height="10dp" >
 
                 <androidx.core.widget.ContentLoadingProgressBar
                         android:id="@+id/progress"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:indeterminate="true"
-                        android:layout_gravity="center"
+
+                        android:minHeight="0dp"
                         android:layout_width="match_parent"
-                        android:layout_height="4dp"/>
+                        android:layout_height="match_parent"/>
 
             </FrameLayout>
+
+
 
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -85,6 +88,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
+                app:itemSpacing="10dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
                 tools:listitem="@layout/layout_folder"
         />

@@ -8,4 +8,6 @@
     <color name="color_background">@android:color/white</color>
     <color name="color_background_dark">#18222c</color>
     <color name="folder_color_text">@android:color/tab_indicator_text</color>
+    <color name="card_color_light">@android:color/white</color>
+    <color name="card_color_dark">#203040</color>
 </resources>

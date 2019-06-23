@@ -17,6 +17,7 @@
             android:textSize="@dimen/text_size_14"
             android:layout_margin="16dp"
             android:drawablePadding="12dp"
+            android:textColor="@color/folder_color_text"
             tools:text="Folder name"
     />
 

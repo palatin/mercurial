@@ -1,8 +1,10 @@
 package com.palatin.mercurial.data
 
 import com.palatin.mercurial.data.model.FTPRemoteConfig
+import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
 import org.apache.commons.net.ftp.FTPFile
+import java.io.InputStream
 import java.io.OutputStream
 import java.net.InetAddress
 import java.net.URI
@@ -55,6 +57,30 @@ class FTPClient {
             Resource.error(ex.localizedMessage, Unit)
         }
 
+    }
+
+    fun newFolder(folderName: String): Resource<Unit> {
+        return try {
+            if(ftpClient?.makeDirectory(folderName) == true)
+                Resource.success(Unit)
+            else Resource.error(null, Unit)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            Resource.error(ex.localizedMessage, Unit)
+        }
+    }
+
+    fun addFile(filePath: String, inputStream: InputStream): Resource<Unit> {
+        return try {
+            if(ftpClient?.storeFile(filePath, inputStream) == true)
+                Resource.success(Unit)
+            else Resource.error(null, Unit)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            Resource.error(ex.localizedMessage, Unit)
+        } finally {
+            inputStream.close()
+        }
     }
 
     sealed class Status {

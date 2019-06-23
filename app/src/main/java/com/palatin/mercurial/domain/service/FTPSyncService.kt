@@ -2,6 +2,7 @@ package com.palatin.mercurial.domain.service
 
 import android.app.Service
 import android.content.Intent
+import android.net.Uri
 import android.os.IBinder
 import com.palatin.mercurial.IFTPConnectionInterface
 import com.palatin.mercurial.IFTPInterface
@@ -52,6 +53,28 @@ class FTPSyncService : Service() {
                 }, {
                     it.printStackTrace()
                     callback.onCatalogFetched(null, it.message)
+                }))
+        }
+
+        override fun newFolder(folderName: String, callback: IFTPConnectionInterface) {
+            compositeDisposable.clear()
+            compositeDisposable.add(ftpInterceptor.newFolder(folderName).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    callback.onCreationCompleted(true,null)
+                }, {
+                    it.printStackTrace()
+                    callback.onCreationCompleted(false, it.message)
+                }))
+        }
+
+        override fun addFile(path: Uri, callback: IFTPConnectionInterface) {
+            compositeDisposable.clear()
+            compositeDisposable.add(ftpInterceptor.addFile(path).observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    callback.onCreationCompleted(true,null)
+                }, {
+                    it.printStackTrace()
+                    callback.onCreationCompleted(false, it.message)
                 }))
         }
 

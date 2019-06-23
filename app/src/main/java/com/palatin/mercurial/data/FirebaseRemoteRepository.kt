@@ -24,10 +24,11 @@ class FirebaseRemoteRepository {
             }
             config.fetchAndActivate().addOnCompleteListener {
                 try {
+                    val hostName = config.getString("host_name")
                     val serverPath = config.getString("server_path")
                     val username = config.getString("user_name")
                     val password = config.getString("user_password")
-                    emmiter.onSuccess(FTPRemoteConfig(serverPath, username, password).also {
+                    emmiter.onSuccess(FTPRemoteConfig(hostName, serverPath, username, password).also {
                         ftpRemoteConfig = it
                     })
                 } catch (ex: Exception) {

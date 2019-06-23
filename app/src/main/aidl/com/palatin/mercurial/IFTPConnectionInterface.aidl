@@ -11,4 +11,5 @@ interface IFTPConnectionInterface {
     void onCatalogFetched(in List<RemoteFile> files, String errorMessage);
 
     void onFileDownloaded(in String filePath, String errorMessage);
+    void onCreationCompleted(boolean result, String message);
 }

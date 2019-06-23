@@ -1,5 +1,6 @@
 package com.palatin.mercurial.ui.explorer
 
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -50,6 +51,7 @@ class ExplorerVM : ViewModel() {
 
     private val ftpConnectionInterface = object : IFTPConnectionInterface.Stub() {
 
+
         override fun complete(result: Boolean, message: String?) {
             if(result) {
                 viewState = viewState.copy(isConnected = true)
@@ -73,23 +75,30 @@ class ExplorerVM : ViewModel() {
         override fun onFileDownloaded(filePath: String?, errorMessage: String?) {
             updateHandler.postDelayed(updateRunnable, AUTO_UPDATE_TIME_RATE)
             viewState = if(errorMessage != null) {
-                viewState.copy(folder = Resource.unit(viewState.folder.data), requestedFile = Resource.error(errorMessage, null))
+                viewState.copy(folder = Resource.error(errorMessage, viewState.folder.data))
             } else {
                 viewState.copy(folder =  Resource.unit(viewState.folder.data), requestedFile = Resource.success(filePath))
             }
         }
 
+        override fun onCreationCompleted(result: Boolean, message: String?) {
+            if(result)
+                updateRunnable.run()
+            else {
+                viewState = viewState.copy(folder = Resource.unit( viewState.folder.data))
+            }
+        }
+
     }
 
-    init {
-        fetchRemoteConfig()
-    }
+
 
     fun initFTPInterface(ftpInterface: IFTPInterface) {
         updateHandler.removeCallbacks(updateRunnable)
         viewState = viewState.copy(isConnected = false, folder = Resource.unit(viewState.folder.data))
         this.ftpInterface = ftpInterface
         disposable.add(fetchRemoteConfig().subscribe({
+            viewState = viewState.copy(hostName = ftpRemoteConfig!!.hostName)
             ftpInterface.connect(ftpRemoteConfig!!, ftpConnectionInterface)
         }, {
             it.printStackTrace()
@@ -120,6 +129,22 @@ class ExplorerVM : ViewModel() {
         }
     }
 
+    fun newFolder(folderName: String) {
+        ftpInterface?.let {
+            updateHandler.removeCallbacks(updateRunnable)
+            viewState = viewState.loading()
+            it.newFolder(folderName, ftpConnectionInterface)
+        }
+    }
+
+    fun newFile(path: Uri) {
+        ftpInterface?.let {
+            updateHandler.removeCallbacks(updateRunnable)
+            viewState = viewState.loading()
+            it.addFile(path, ftpConnectionInterface)
+        }
+    }
+
     fun disconnect() {
         ftpInterface = null
         updateHandler.removeCallbacks(updateRunnable)
@@ -143,16 +168,10 @@ class ExplorerVM : ViewModel() {
     }
 
     private fun getFolderPath(): String {
-        val str = StringBuilder()
-        mPendingPath.forEachIndexed { index, s ->
-            str.append(s)
-            if(index != mPendingPath.size - 1)
-                str.append(".")
-        }
-        return str.toString()
+        return mPendingPath.joinToString(separator = ".")
     }
 
-    data class ViewState(val folder: Resource<List<RemoteFile>> = Resource.unit(),
+    data class ViewState(val hostName: String = "Loading", val folder: Resource<List<RemoteFile>> = Resource.unit(),
                          val isConnected: Boolean = false, val path: Stack<String> = Stack(),
                          val requestedFile: Resource<String> = Resource.unit()) {
 

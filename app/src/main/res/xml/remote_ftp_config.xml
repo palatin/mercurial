@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <defaultsMap>
     <entry>
+        <key>host_name</key>
+        <value>Dlptest</value>
+    </entry>
+    <entry>
         <key>server_path</key>
-        <value></value>
+        <value>ftp://ftp.dlptest.com/</value>
     </entry>
     <entry>
         <key>user_name</key>
-        <value></value>
+        <value>dlpuser@dlptest.com</value>
     </entry>
     <entry>
         <key>user_password</key>
-        <value></value>
+        <value>fLDScD4Ynth0p4OJ6bW6qCxjh</value>
     </entry>
 </defaultsMap>

@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -34,11 +35,17 @@ import com.palatin.mercurial.data.Resource
 import com.palatin.mercurial.data.model.RemoteFile
 import com.palatin.mercurial.domain.service.FTPSyncService
 import com.palatin.mercurial.ui.image_viewer.ImageViewerFragment
+import com.palatin.mercurial.ui.main.FtpActionListener
+import com.palatin.mercurial.ui.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_explore.*
 import java.io.File
+import java.lang.StringBuilder
+import java.util.*
 
 
-class ExploreFragment : Fragment() {
+class ExploreFragment : Fragment(), FtpActionListener {
+
+
 
     private lateinit var vm: ExplorerVM
     private val controller: FilesController by lazy {
@@ -82,7 +89,7 @@ class ExploreFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        (requireActivity() as? MainActivity)?.listener = this
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressed)
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
@@ -102,6 +109,8 @@ class ExploreFragment : Fragment() {
             it.requestedFile.data?.let {
                 openFile(it)
             }
+            setPath(it.path)
+            (requireActivity() as AppCompatActivity).supportActionBar!!.title = it.hostName
         })
 
     }
@@ -113,8 +122,22 @@ class ExploreFragment : Fragment() {
         mPendingFile = null
     }
 
+    override fun newFolder(name: String) {
+        vm.newFolder(name)
+    }
+
+    override fun addFile(path: Uri) {
+        vm.newFile(path)
+    }
+
     private fun setUi() {
         rv_files.setController(controller)
+        rv_files.itemAnimator = null
+        (requireActivity() as AppCompatActivity).let {
+            it.setSupportActionBar(toolbar)
+            it.supportActionBar!!.title = "Loading"
+        }
+
     }
 
     private fun openFile(filePath: String) {
@@ -152,9 +175,17 @@ class ExploreFragment : Fragment() {
         requireActivity().bindService(Intent(requireContext(), FTPSyncService::class.java), connection, Service.BIND_AUTO_CREATE)
     }
 
+    private fun setPath(path: Stack<String>) {
+        var mPath = "/root"
+        if(path.isNotEmpty())
+            mPath += "/${path.joinToString(separator = "/")}"
+        tv_path.text = mPath
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().unbindService(connection)
+        (requireActivity() as? MainActivity)?.listener = null
     }
 
 }

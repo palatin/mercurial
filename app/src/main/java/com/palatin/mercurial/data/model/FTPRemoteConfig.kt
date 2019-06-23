@@ -5,9 +5,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 //Not used kotlin @Parcelable annotation because of bug with aidl
-data class FTPRemoteConfig(val link: String, val username: String, val password: String) : Parcelable {
+data class FTPRemoteConfig(val hostName: String, val link: String, val username: String, val password: String) : Parcelable {
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -15,6 +16,7 @@ data class FTPRemoteConfig(val link: String, val username: String, val password:
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(hostName)
         parcel.writeString(link)
         parcel.writeString(username)
         parcel.writeString(password)

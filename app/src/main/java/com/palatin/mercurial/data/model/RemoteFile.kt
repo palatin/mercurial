@@ -6,6 +6,7 @@ import android.text.format.DateFormat
 import com.palatin.mercurial.util.fileSize
 import java.util.*
 
+//Not used kotlin @Parcelable annotation because of bug with aidl
 data class RemoteFile(val name: String, val isFolder: Boolean, val date: Long, val size: Long) : Parcelable {
 
     private var formattedDate: String? = null

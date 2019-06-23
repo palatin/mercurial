@@ -39,8 +39,17 @@ android {
         }
     }
     productFlavors {
-
+        list {
+            flavorDimensions  'list'
+            versionCode = 1
+            versionName = '1.0'
+            applicationId = 'com.palatin.mercurial'
+        }
+        grid {
+            flavorDimensions  'grid'
+        }
     }
+
 }
 
 
@@ -65,4 +74,5 @@ dependencies {
     implementation 'com.airbnb.android:epoxy:3.6.0'
 
     kapt 'com.airbnb.android:epoxy-processor:3.6.0'
+    implementation 'com.github.palatin:pretty-dialog:0.1'
 }
