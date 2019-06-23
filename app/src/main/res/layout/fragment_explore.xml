@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:context=".ui.explorer.ExploreFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/explore_topbar_color"
+            >
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleEnabled="false"
+        >
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleTextColor="@android:color/white"
+                    >
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
+                    android:clipToPadding="false"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+            >
+
+                <TextView
+                        android:id="@+id/tv_path"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Root"
+
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/text_size_18"
+                />
+
+            </HorizontalScrollView>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp" >
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                        android:id="@+id/progress"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:indeterminate="true"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/rv_files"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                tools:listitem="@layout/layout_folder"
+        />
+
+
+
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

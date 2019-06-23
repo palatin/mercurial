@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "742059162035",
+    "firebase_url": "https://mercurial-4d18f.firebaseio.com",
+    "project_id": "mercurial-4d18f",
+    "storage_bucket": "mercurial-4d18f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742059162035:android:22a0bfae97e493d2",
+        "android_client_info": {
+          "package_name": "com.palatin.mercurial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742059162035-a2iqqqtpmdb8ikc1th7grt1eeqi0628o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palatin.mercurial",
+            "certificate_hash": "5c5af02579de02fecaf652c46ed9373c03a9e573"
+          }
+        },
+        {
+          "client_id": "742059162035-ousgn7c47imqafmocissgjt2ucmd34m3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1k2iRKTkwvGARl4i3zKMHY0wAK1C7stU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742059162035-ousgn7c47imqafmocissgjt2ucmd34m3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

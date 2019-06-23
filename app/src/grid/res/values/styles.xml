@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="explore_topbar_color">@color/color_top_bar_light</item>
         <item name="explore_bg_color">@color/color_background</item>
+        <item name="card_color">@color/card_color_light</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -17,6 +18,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="explore_topbar_color">@color/color_top_bar_dark</item>
         <item name="explore_bg_color">@color/color_background_dark</item>
+        <item name="card_color">@color/card_color_dark</item>
     </style>
 
 </resources>

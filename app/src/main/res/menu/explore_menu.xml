@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <item android:id="@+id/dotMenu"
+          android:icon="@drawable/ic_menu"
+          app:showAsAction="ifRoom" >
+
+        <menu>
+            <item
+                    android:id="@+id/new_folder"
+                    app:showAsAction="always"
+                    android:title="@string/new_folder"
+            />
+            <item
+                    android:id="@+id/upload_file"
+                    app:showAsAction="always"
+                    android:title="@string/upload_file"
+            />
+            <item
+                    android:id="@+id/dark_theme"
+                    app:showAsAction="always"
+                    android:title="@string/dark_theme"
+                    android:checkable="true"
+                    />
+        </menu>
+    </item>
+
+</menu>
