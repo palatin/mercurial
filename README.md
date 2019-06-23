@@ -15,7 +15,14 @@ Application currently supports:
   <img src="/1.jpg" alt="sample" title="sample" width="146" height="260" />
   <img src="/2.jpg" alt="sample" title="sample" width="146" height="260" />
   <img src="/3.jpg" alt="sample" title="sample" width="146" height="260" />
-  </p>
+</p>
+<img src="/sample.gif" alt="sample" title="sample" width="146" height="260" />
+
+### Downloads
+
+[list type apk](app-list-debug.apk)
+
+[grid type apk](app-grid-debug.apk)
 
 ### LICENSE
 
