@@ -56,9 +56,9 @@ class FTPSyncService : Service() {
                 }))
         }
 
-        override fun newFolder(folderName: String, callback: IFTPConnectionInterface) {
+        override fun newFolder(folderName: String, folderPath: String, callback: IFTPConnectionInterface) {
             compositeDisposable.clear()
-            compositeDisposable.add(ftpInterceptor.newFolder(folderName).observeOn(AndroidSchedulers.mainThread())
+            compositeDisposable.add(ftpInterceptor.newFolder(folderName, folderPath).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     callback.onCreationCompleted(true,null)
                 }, {
@@ -67,9 +67,9 @@ class FTPSyncService : Service() {
                 }))
         }
 
-        override fun addFile(path: Uri, callback: IFTPConnectionInterface) {
+        override fun addFile(path: Uri, folderPath: String, callback: IFTPConnectionInterface) {
             compositeDisposable.clear()
-            compositeDisposable.add(ftpInterceptor.addFile(path).observeOn(AndroidSchedulers.mainThread())
+            compositeDisposable.add(ftpInterceptor.addFile(path, folderPath).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     callback.onCreationCompleted(true,null)
                 }, {

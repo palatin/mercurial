@@ -133,7 +133,7 @@ class ExplorerVM : ViewModel() {
         ftpInterface?.let {
             updateHandler.removeCallbacks(updateRunnable)
             viewState = viewState.loading()
-            it.newFolder(folderName, ftpConnectionInterface)
+            it.newFolder(folderName, getFolderPath(), ftpConnectionInterface)
         }
     }
 
@@ -141,7 +141,7 @@ class ExplorerVM : ViewModel() {
         ftpInterface?.let {
             updateHandler.removeCallbacks(updateRunnable)
             viewState = viewState.loading()
-            it.addFile(path, ftpConnectionInterface)
+            it.addFile(path, getFolderPath(), ftpConnectionInterface)
         }
     }
 

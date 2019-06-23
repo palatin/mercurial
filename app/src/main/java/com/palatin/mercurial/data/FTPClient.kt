@@ -20,7 +20,8 @@ class FTPClient {
             ftpClient!!.defaultTimeout = 5000
             ftpClient!!.connect(URI(ftpRemoteConfig.link).host)
             ftpClient!!.enterLocalPassiveMode()
-            if(!ftpClient!!.login(ftpRemoteConfig.username, ftpRemoteConfig.password))
+            ftpClient!!.setFileType(FTP.BINARY_FILE_TYPE)
+            if(ftpRemoteConfig.username.isNotBlank() && !ftpClient!!.login(ftpRemoteConfig.username, ftpRemoteConfig.password))
                 throw InvalidCredentialsException()
             Status.Connected
         } catch (ex: InvalidCredentialsException) {
@@ -41,6 +42,7 @@ class FTPClient {
 
     fun getFiles(parent: String): Resource<Array<FTPFile>> {
         return try {
+            ftpClient?.changeWorkingDirectory("")
             Resource.success(ftpClient?.listFiles(parent))
         } catch (ex: Exception) {
             Resource.error(ex.localizedMessage, null)
@@ -49,6 +51,7 @@ class FTPClient {
 
     fun getFile(fileName: String, outStream: OutputStream): Resource<Unit> {
         return try {
+            ftpClient?.changeWorkingDirectory("")
             if(ftpClient?.retrieveFile(fileName, outStream) == true)
                 Resource.success(Unit)
             else Resource.error(null, Unit)
@@ -59,8 +62,9 @@ class FTPClient {
 
     }
 
-    fun newFolder(folderName: String): Resource<Unit> {
+    fun newFolder(folderName: String, folderPath: String): Resource<Unit> {
         return try {
+            ftpClient?.changeWorkingDirectory(folderPath)
             if(ftpClient?.makeDirectory(folderName) == true)
                 Resource.success(Unit)
             else Resource.error(null, Unit)
@@ -70,8 +74,9 @@ class FTPClient {
         }
     }
 
-    fun addFile(filePath: String, inputStream: InputStream): Resource<Unit> {
+    fun addFile(filePath: String, folderPath: String, inputStream: InputStream): Resource<Unit> {
         return try {
+            ftpClient?.changeWorkingDirectory(folderPath)
             if(ftpClient?.storeFile(filePath, inputStream) == true)
                 Resource.success(Unit)
             else Resource.error(null, Unit)

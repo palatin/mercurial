@@ -66,9 +66,9 @@ class FTPInterceptor(private val ftpClient: FTPClient) {
         }.subscribeOn(Schedulers.io())
     }
 
-    fun newFolder(folderName: String): Completable {
+    fun newFolder(folderName: String, folderPath: String): Completable {
         return Completable.create { emitter ->
-            val res = ftpClient.newFolder(folderName)
+            val res = ftpClient.newFolder(folderName, folderPath)
             if(res.status == Resource.Status.SUCCESS) {
                 emitter.onComplete()
             } else {
@@ -77,10 +77,11 @@ class FTPInterceptor(private val ftpClient: FTPClient) {
         }.subscribeOn(Schedulers.io())
     }
 
-    fun addFile(path: Uri): Completable {
+    fun addFile(path: Uri, folderPath: String): Completable {
         return Completable.create { emitter ->
 
-            val res = ftpClient.addFile(path.path!!.substring(path.path!!.lastIndexOf("/")+1), App.app.contentResolver.openInputStream(path))
+            val res = ftpClient.addFile(path.path!!.substring(path.path!!.lastIndexOf("/")+1), folderPath,
+                App.app.contentResolver.openInputStream(path))
 
             if(res.status == Resource.Status.SUCCESS) {
                 emitter.onComplete()
