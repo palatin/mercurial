@@ -1,9 +1,12 @@
 package com.palatin.mercurial.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.annotation.Keep
 
 
-data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
+data class Resource<out T>(val status: Status, val data: T?, val message: String?, var isReceived: Boolean = false) {
+
     companion object {
 
         fun <T> success(data: T?): Resource<T> {
@@ -34,4 +37,6 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
         LOADING,
         UNIT
     }
+
+
 }
