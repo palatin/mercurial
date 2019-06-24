@@ -45,9 +45,9 @@ class FTPSyncService : Service() {
                 }))
         }
 
-        override fun getFile(file: RemoteFile, callback: IFTPConnectionInterface) {
+        override fun getFile(path: String, file: RemoteFile, callback: IFTPConnectionInterface) {
             compositeDisposable.clear()
-            compositeDisposable.add(ftpInterceptor.getFile(file).observeOn(AndroidSchedulers.mainThread())
+            compositeDisposable.add(ftpInterceptor.getFile(path, file).observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     callback.onFileDownloaded(it,null)
                 }, {

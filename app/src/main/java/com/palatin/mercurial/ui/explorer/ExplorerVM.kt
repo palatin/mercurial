@@ -125,7 +125,7 @@ class ExplorerVM : ViewModel() {
         ftpInterface?.let {
             updateHandler.removeCallbacks(updateRunnable)
             viewState = viewState.loading()
-            it.getFile(remoteFile, ftpConnectionInterface)
+            it.getFile(getFolderPath(), remoteFile, ftpConnectionInterface)
         }
     }
 

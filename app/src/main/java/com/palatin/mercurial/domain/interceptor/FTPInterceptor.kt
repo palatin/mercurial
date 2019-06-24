@@ -44,7 +44,7 @@ class FTPInterceptor(private val ftpClient: FTPClient) {
         }.subscribeOn(Schedulers.io())
     }
 
-    fun getFile(remoteFile: RemoteFile): Single<String> {
+    fun getFile(path: String, remoteFile: RemoteFile): Single<String> {
         return Single.create<String> {  emitter ->
 
             val file = File(Environment.getExternalStorageDirectory().absolutePath + "/" + remoteFile.name)
@@ -57,7 +57,7 @@ class FTPInterceptor(private val ftpClient: FTPClient) {
                     file.delete()
                 }
             }
-            val res = ftpClient.getFile(remoteFile.name, file.outputStream())
+            val res = ftpClient.getFile(path, remoteFile.name, file.outputStream())
             if(res.status == Resource.Status.SUCCESS) {
                 emitter.onSuccess(file.path)
             } else {

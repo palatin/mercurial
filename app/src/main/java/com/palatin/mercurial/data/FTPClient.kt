@@ -49,9 +49,9 @@ class FTPClient {
         }
     }
 
-    fun getFile(fileName: String, outStream: OutputStream): Resource<Unit> {
+    fun getFile(path: String, fileName: String, outStream: OutputStream): Resource<Unit> {
         return try {
-            ftpClient?.changeWorkingDirectory("")
+            ftpClient?.changeWorkingDirectory(path)
             if(ftpClient?.retrieveFile(fileName, outStream) == true)
                 Resource.success(Unit)
             else Resource.error(null, Unit)
